@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد ميلاد سعيد</title>
+    <style>
+        /* إعدادات الصفحة الأساسية */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* حاوية النصوص */
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* تنسيق النص وتأثير التوهج */
+        h1 {
+            color: #fff;
+            font-size: 4rem;
+            margin: 10px 0;
+            text-shadow: 0 0 10px #ff4b4b, 0 0 20px #ff4b4b, 0 0 40px #ff4b4b;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            color: #ffb1b1;
+            font-size: 2.5rem;
+            margin-top: 0;
+            font-weight: 300;
+        }
+
+        /* تنسيق القلب وتأثير النبض */
+        .heart-icon {
+            color: #e94560;
+            font-size: 6rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px #e94560;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        /* حركة النبض */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        /* حركة التوهج */
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #e94560, 0 0 30px #e94560; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff0000, 0 0 40px #ff0000; }
+        }
+
+        /* تأثير القلوب المتساقطة في الخلفية */
+        .particle {
+            position: absolute;
+            top: -10%;
+            font-size: 24px;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* استجابة الشاشات الصغيرة (الموبايل) */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.8rem; }
+            .heart-icon { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="heart-icon">❤️</div>
+        <h1>عيد ميلاد سعيد</h1>
+        <h2 class="subtitle">يا نبض كلبي</h2>
+    </div>
+
+    <script>
+        // سكربت لتوليد قلوب تتساقط بشكل عشوائي في الخلفية
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            // مصفوفة بأشكال مختلفة للقلوب
+            const heartsArray = ['❤️', '💖', '💕', '💓', '💗'];
+            heart.innerHTML = heartsArray[Math.floor(Math.random() * heartsArray.length)];
+            heart.classList.add('particle');
+            
+            // تحديد موقع عشوائي للقلب على المحور الأفقي
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // تحديد سرعة عشوائية للسقوط
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            
+            // تحديد حجم عشوائي
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            heart.style.opacity = Math.random();
+
+            document.body.appendChild(heart);
+
+            // إزالة القلب بعد انتهاء الحركة لتجنب استهلاك الذاكرة
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // إنشاء قلب جديد كل 400 جزء من الثانية
+        setInterval(createFallingHeart, 400);
+    </script>
+</body>
+</html>
