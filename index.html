@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عيد ميلاد سعيد</title>
+    <title>هدية خاصة لك</title>
     <style>
         /* إعدادات الصفحة الأساسية */
         body {
@@ -13,22 +13,94 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #111, #16213e, #0f0f1a);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
         }
 
-        /* حاوية النصوص */
-        .container {
-            text-align: center;
-            position: relative;
+        /* تنسيق الشاشات (واجهة الهدية وواجهة الرسالة) */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+        }
+
+        /* الشاشة المخفية */
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1;
+        }
+
+        /* الشاشة النشطة */
+        .active {
+            opacity: 1;
+            visibility: visible;
             z-index: 10;
         }
 
-        /* تنسيق النص وتأثير التوهج */
+        /* ----- تنسيقات شاشة الهدية ----- */
+        .gift-wrapper {
+            text-align: center;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .gift-box {
+            font-size: 8rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px rgba(233, 69, 96, 0.6));
+            animation: floatGift 3s ease-in-out infinite, shakeGift 2s infinite 3s;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .gift-wrapper:hover .gift-box {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 40px rgba(233, 69, 96, 1));
+        }
+
+        .click-text {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: pulseText 1.5s infinite alternate;
+        }
+
+        /* حركات الهدية */
+        @keyframes floatGift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes shakeGift {
+            0%, 100% { transform: rotate(0); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
+            20%, 40%, 60%, 80% { transform: rotate(5deg); }
+        }
+
+        @keyframes pulseText {
+            from { opacity: 0.5; text-shadow: 0 0 10px #fff; }
+            to { opacity: 1; text-shadow: 0 0 20px #e94560; }
+        }
+
+        /* ----- تنسيقات شاشة الرسالة ----- */
+        .message-container {
+            text-align: center;
+            position: relative;
+        }
+
         h1 {
             color: #fff;
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin: 10px 0;
             text-shadow: 0 0 10px #ff4b4b, 0 0 20px #ff4b4b, 0 0 40px #ff4b4b;
             animation: glow 2s ease-in-out infinite alternate;
@@ -36,12 +108,11 @@
 
         .subtitle {
             color: #ffb1b1;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-top: 0;
             font-weight: 300;
         }
 
-        /* تنسيق القلب وتأثير النبض */
         .heart-icon {
             color: #e94560;
             font-size: 6rem;
@@ -51,7 +122,6 @@
             animation: heartbeat 1.2s infinite;
         }
 
-        /* حركة النبض */
         @keyframes heartbeat {
             0% { transform: scale(1); }
             14% { transform: scale(1.3); }
@@ -60,73 +130,102 @@
             70% { transform: scale(1); }
         }
 
-        /* حركة التوهج */
         @keyframes glow {
             from { text-shadow: 0 0 10px #fff, 0 0 20px #e94560, 0 0 30px #e94560; }
             to { text-shadow: 0 0 20px #fff, 0 0 30px #ff0000, 0 0 40px #ff0000; }
         }
 
-        /* تأثير القلوب المتساقطة في الخلفية */
+        /* القلوب المتساقطة */
         .particle {
             position: absolute;
             top: -10%;
-            font-size: 24px;
             user-select: none;
             pointer-events: none;
             animation: fall linear forwards;
+            z-index: 5;
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
+            to { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* استجابة الشاشات الصغيرة (الموبايل) */
+        /* استجابة الشاشات الصغيرة */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .subtitle { font-size: 1.8rem; }
+            h1 { font-size: 2.8rem; }
+            .subtitle { font-size: 2rem; }
             .heart-icon { font-size: 4rem; }
+            .gift-box { font-size: 6rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="heart-icon">❤️</div>
-        <h1>عيد ميلاد سعيد</h1>
-        <h2 class="subtitle">يا نبض كلبي</h2>
+    <!-- الشاشة الأولى: الهدية -->
+    <div id="gift-screen" class="screen active">
+        <div class="gift-wrapper" onclick="openGift()">
+            <div class="gift-box" id="gift">🎁</div>
+            <p class="click-text">اضغط لفتح الهدية</p>
+        </div>
+    </div>
+
+    <!-- الشاشة الثانية: الرسالة (مخفية في البداية) -->
+    <div id="message-screen" class="screen hidden">
+        <div class="message-container">
+            <div class="heart-icon">❤️</div>
+            <h1>عيد ميلاد سعيد</h1>
+            <h2 class="subtitle">يا نبض كلبي</h2>
+        </div>
     </div>
 
     <script>
-        // سكربت لتوليد قلوب تتساقط بشكل عشوائي في الخلفية
+        let heartsInterval;
+
+        // دالة فتح الهدية
+        function openGift() {
+            const giftScreen = document.getElementById('gift-screen');
+            const messageScreen = document.getElementById('message-screen');
+            const giftBox = document.getElementById('gift');
+
+            // إضافة تأثير الانفجار للهدية عند الضغط
+            giftBox.style.transform = 'scale(2)';
+            giftBox.style.opacity = '0';
+            giftBox.style.transition = 'all 0.6s ease';
+
+            // بعد انتهاء تأثير الهدية، نقوم بتبديل الشاشات
+            setTimeout(() => {
+                giftScreen.classList.remove('active');
+                giftScreen.classList.add('hidden');
+                
+                messageScreen.classList.remove('hidden');
+                messageScreen.classList.add('active');
+
+                // تشغيل تساقط القلوب فقط بعد ظهور الرسالة
+                startHeartRain();
+            }, 600);
+        }
+
+        // دالة تساقط القلوب
         function createFallingHeart() {
             const heart = document.createElement('div');
-            // مصفوفة بأشكال مختلفة للقلوب
-            const heartsArray = ['❤️', '💖', '💕', '💓', '💗'];
+            const heartsArray = ['❤️', '💖', '💕', '💓', '✨']; // تم إضافة نجوم لامعة أيضاً
             heart.innerHTML = heartsArray[Math.floor(Math.random() * heartsArray.length)];
             heart.classList.add('particle');
             
-            // تحديد موقع عشوائي للقلب على المحور الأفقي
             heart.style.left = Math.random() * 100 + 'vw';
-            
-            // تحديد سرعة عشوائية للسقوط
             heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            
-            // تحديد حجم عشوائي
             heart.style.fontSize = Math.random() * 20 + 15 + 'px';
             heart.style.opacity = Math.random();
 
             document.body.appendChild(heart);
 
-            // إزالة القلب بعد انتهاء الحركة لتجنب استهلاك الذاكرة
             setTimeout(() => {
                 heart.remove();
             }, 6000);
         }
 
-        // إنشاء قلب جديد كل 400 جزء من الثانية
-        setInterval(createFallingHeart, 400);
+        function startHeartRain() {
+            heartsInterval = setInterval(createFallingHeart, 300);
+        }
     </script>
 </body>
 </html>
