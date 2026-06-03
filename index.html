@@ -1,231 +1,243 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هدية خاصة لك</title>
-    <style>
-        /* إعدادات الصفحة الأساسية */
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #111, #16213e, #0f0f1a);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-        }
-
-        /* تنسيق الشاشات (واجهة الهدية وواجهة الرسالة) */
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 1.5s ease-in-out, visibility 1.5s;
-        }
-
-        /* الشاشة المخفية */
-        .hidden {
-            opacity: 0;
-            visibility: hidden;
-            z-index: -1;
-        }
-
-        /* الشاشة النشطة */
-        .active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
-        }
-
-        /* ----- تنسيقات شاشة الهدية ----- */
-        .gift-wrapper {
-            text-align: center;
-            cursor: pointer;
-            z-index: 20;
-        }
-
-        .gift-box {
-            font-size: 8rem;
-            display: inline-block;
-            filter: drop-shadow(0 0 20px rgba(233, 69, 96, 0.6));
-            animation: floatGift 3s ease-in-out infinite, shakeGift 2s infinite 3s;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-
-        .gift-wrapper:hover .gift-box {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 40px rgba(233, 69, 96, 1));
-        }
-
-        .click-text {
-            color: #fff;
-            font-size: 1.5rem;
-            margin-top: 20px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            animation: pulseText 1.5s infinite alternate;
-        }
-
-        /* حركات الهدية */
-        @keyframes floatGift {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes shakeGift {
-            0%, 100% { transform: rotate(0); }
-            10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
-            20%, 40%, 60%, 80% { transform: rotate(5deg); }
-        }
-
-        @keyframes pulseText {
-            from { opacity: 0.5; text-shadow: 0 0 10px #fff; }
-            to { opacity: 1; text-shadow: 0 0 20px #e94560; }
-        }
-
-        /* ----- تنسيقات شاشة الرسالة ----- */
-        .message-container {
-            text-align: center;
-            position: relative;
-        }
-
-        h1 {
-            color: #fff;
-            font-size: 4.5rem;
-            margin: 10px 0;
-            text-shadow: 0 0 10px #ff4b4b, 0 0 20px #ff4b4b, 0 0 40px #ff4b4b;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        .subtitle {
-            color: #ffb1b1;
-            font-size: 2.8rem;
-            margin-top: 0;
-            font-weight: 300;
-        }
-
-        .heart-icon {
-            color: #e94560;
-            font-size: 6rem;
-            display: inline-block;
-            margin-bottom: 20px;
-            text-shadow: 0 0 30px #e94560;
-            animation: heartbeat 1.2s infinite;
-        }
-
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.3); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.3); }
-            70% { transform: scale(1); }
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #fff, 0 0 20px #e94560, 0 0 30px #e94560; }
-            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff0000, 0 0 40px #ff0000; }
-        }
-
-        /* القلوب المتساقطة */
-        .particle {
-            position: absolute;
-            top: -10%;
-            user-select: none;
-            pointer-events: none;
-            animation: fall linear forwards;
-            z-index: 5;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        /* استجابة الشاشات الصغيرة */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            .subtitle { font-size: 2rem; }
-            .heart-icon { font-size: 4rem; }
-            .gift-box { font-size: 6rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3TX – تصميم المواقع الإلكترونية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #08020f;
+  min-height: 100vh;
+  font-family: 'Cairo', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+.grid-bg {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(168,85,247,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,0.07) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 12s linear infinite;
+}
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+.orb { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+.orb1 { width:500px;height:500px;background:#7c3aed;top:-150px;left:-150px;opacity:0.3;animation:orbFloat 6s ease-in-out infinite alternate; }
+.orb2 { width:400px;height:400px;background:#a855f7;bottom:-100px;right:-100px;opacity:0.25;animation:orbFloat 7s ease-in-out infinite alternate-reverse; }
+.orb3 { width:250px;height:250px;background:#c026d3;top:40%;left:50%;opacity:0.2;animation:orbFloat 5s ease-in-out infinite alternate; }
+@keyframes orbFloat {
+  from { transform: scale(1) translate(0,0); }
+  to   { transform: scale(1.2) translate(30px,-30px); }
+}
+.particles { position:fixed;inset:0;pointer-events:none; }
+.particle { position:absolute; border-radius:50%; opacity:0; animation: floatUp linear infinite; }
+@keyframes floatUp {
+  0%   { transform:translateY(100vh) translateX(0); opacity:0; }
+  10%  { opacity:1; }
+  90%  { opacity:1; }
+  100% { transform:translateY(-10vh) translateX(var(--drift)); opacity:0; }
+}
+.ticker-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: linear-gradient(90deg, rgba(124,58,237,0.6), rgba(168,85,247,0.8), rgba(192,38,211,0.6));
+  border-bottom: 1px solid rgba(168,85,247,0.6);
+  padding: 10px 0; overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+.ticker-inner {
+  display: flex; white-space: nowrap;
+  animation: tickerScroll 18s linear infinite;
+  font-size: 13px; font-weight: 700;
+  color: #fff; letter-spacing: 3px;
+}
+@keyframes tickerScroll {
+  0%   { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+.corner { position:fixed; width:50px;height:50px; z-index:5; }
+.corner::before,.corner::after { content:''; position:absolute; background:#a855f7; box-shadow:0 0 8px #a855f7; }
+.corner::before { width:100%;height:2px; }
+.corner::after  { width:2px;height:100%; }
+.corner-tl { top:50px; left:20px; }
+.corner-tr { top:50px; right:20px; transform:scaleX(-1); }
+.corner-bl { bottom:20px;left:20px; transform:scaleY(-1); }
+.corner-br { bottom:20px;right:20px; transform:scale(-1); }
+.container {
+  position: relative; z-index:10;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 100vh;
+  padding: 5rem 2rem 2rem;
+  text-align: center;
+  animation: siteFloat 4s ease-in-out infinite;
+}
+@keyframes siteFloat {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  25%  { transform: translateY(-12px) rotate(-0.4deg); }
+  50%  { transform: translateY(-6px) rotate(0deg); }
+  75%  { transform: translateY(-14px) rotate(0.4deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+.live-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(192,38,211,0.2);
+  border: 1px solid rgba(192,38,211,0.6);
+  border-radius: 50px; padding: 6px 22px;
+  margin-bottom: 1.8rem;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+.live-dot { width:10px;height:10px;background:#d946ef;border-radius:50%;box-shadow:0 0 10px #d946ef;animation:blink 1s ease-in-out infinite; }
+.live-text { font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:#e879f9;letter-spacing:3px; }
+@keyframes blink   { 0%,100%{opacity:1} 50%{opacity:0.15} }
+@keyframes badgePulse {
+  0%,100% { box-shadow:0 0 10px rgba(192,38,211,0.3); }
+  50%      { box-shadow:0 0 25px rgba(192,38,211,0.7); }
+}
+.logo-wrap { position:relative; margin-bottom:0.5rem; }
+.logo-3tx {
+  font-family:'Orbitron',monospace;
+  font-size: clamp(80px,16vw,150px);
+  font-weight:900; line-height:1;
+  color:transparent;
+  -webkit-text-stroke: 2px #a855f7;
+  text-shadow: 0 0 40px rgba(168,85,247,0.8),0 0 80px rgba(168,85,247,0.4),0 0 120px rgba(168,85,247,0.2);
+  letter-spacing:10px;
+  animation: logoColor 3s ease-in-out infinite alternate;
+}
+@keyframes logoColor {
+  from { -webkit-text-stroke:2px #a855f7; text-shadow:0 0 50px rgba(168,85,247,0.9),0 0 100px rgba(168,85,247,0.4); }
+  to   { -webkit-text-stroke:2px #e879f9; text-shadow:0 0 60px rgba(232,121,249,1),0 0 120px rgba(192,38,211,0.5); }
+}
+.scan-line {
+  position:absolute; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,transparent,#d946ef,transparent);
+  animation:scan 2s linear infinite; opacity:0.8;
+}
+@keyframes scan {
+  0%   { top:0%; opacity:0; }
+  5%   { opacity:0.8; }
+  95%  { opacity:0.8; }
+  100% { top:100%; opacity:0; }
+}
+.tagline {
+  font-size: clamp(12px,2.5vw,18px);
+  color: rgba(216,180,254,0.65);
+  letter-spacing: 6px; text-transform:uppercase;
+  margin-bottom:0.5rem;
+  animation: shimmer 3s ease-in-out infinite alternate;
+}
+@keyframes shimmer {
+  from { color:rgba(216,180,254,0.5); }
+  to   { color:rgba(255,255,255,0.85); }
+}
+.main-title { font-size: clamp(22px,5vw,50px);font-weight:900;color:#fff;line-height:1.3;margin-bottom:1.5rem; }
+.main-title span {
+  background: linear-gradient(90deg,#c026d3,#a855f7,#7c3aed);
+  background-size: 200% auto;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation: gradShift 3s linear infinite;
+}
+@keyframes gradShift {
+  0%   { background-position:0% center; }
+  100% { background-position:200% center; }
+}
+.divider { width:220px;height:1px;background:linear-gradient(90deg,transparent,#a855f7,transparent);margin:0 auto 1.5rem; }
+.info-strip { display:flex;gap:2rem;align-items:center;flex-wrap:wrap;justify-content:center; }
+.info-item { display:flex;align-items:center;gap:8px;color:rgba(216,180,254,0.65);font-size:14px; }
+.info-icon { width:8px;height:8px;background:#c026d3;border-radius:50%;box-shadow:0 0 6px #c026d3;animation:iconPop 2s ease-in-out infinite alternate; }
+@keyframes iconPop {
+  from { transform:scale(1);box-shadow:0 0 5px #c026d3; }
+  to   { transform:scale(1.4);box-shadow:0 0 12px #e879f9; }
+}
+.ring { position:fixed;border-radius:50%;border:1px solid rgba(168,85,247,0.15);pointer-events:none;z-index:1;animation:ringExpand linear infinite; }
+@keyframes ringExpand {
+  0%   { transform:scale(0.3);opacity:0.6; }
+  100% { transform:scale(2.5);opacity:0; }
+}
+</style>
 </head>
 <body>
 
-    <!-- الشاشة الأولى: الهدية -->
-    <div id="gift-screen" class="screen active">
-        <div class="gift-wrapper" onclick="openGift()">
-            <div class="gift-box" id="gift">🎁</div>
-            <p class="click-text">اضغط لفتح الهدية</p>
-        </div>
-    </div>
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
 
-    <!-- الشاشة الثانية: الرسالة (مخفية في البداية) -->
-    <div id="message-screen" class="screen hidden">
-        <div class="message-container">
-            <div class="heart-icon">❤️</div>
-            <h1>عيد ميلاد سعيد</h1>
-            <h2 class="subtitle">يا نبض كلبي</h2>
-        </div>
-    </div>
+<div class="ticker-top">
+  <div class="ticker-inner">
+    ✦ &nbsp;&nbsp; مرحباً بكم في بث 3TX لتصميم المواقع الإلكترونية &nbsp;&nbsp; ✦ &nbsp;&nbsp; نصمم مواقع احترافية بأعلى جودة &nbsp;&nbsp; ✦ &nbsp;&nbsp; اشترك الآن وتابع كل جديد &nbsp;&nbsp; ✦ &nbsp;&nbsp; 3TX – حيث يبدأ التميز الرقمي &nbsp;&nbsp; ✦ &nbsp;&nbsp; تصميم • تطوير • إبداع &nbsp;&nbsp; ✦ &nbsp;&nbsp; مرحباً بكم في بث 3TX لتصميم المواقع الإلكترونية &nbsp;&nbsp; ✦ &nbsp;&nbsp;
+  </div>
+</div>
 
-    <script>
-        let heartsInterval;
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
 
-        // دالة فتح الهدية
-        function openGift() {
-            const giftScreen = document.getElementById('gift-screen');
-            const messageScreen = document.getElementById('message-screen');
-            const giftBox = document.getElementById('gift');
+<div class="particles" id="particles"></div>
+<div id="rings"></div>
 
-            // إضافة تأثير الانفجار للهدية عند الضغط
-            giftBox.style.transform = 'scale(2)';
-            giftBox.style.opacity = '0';
-            giftBox.style.transition = 'all 0.6s ease';
+<div class="container">
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    <span class="live-text">LIVE NOW</span>
+  </div>
 
-            // بعد انتهاء تأثير الهدية، نقوم بتبديل الشاشات
-            setTimeout(() => {
-                giftScreen.classList.remove('active');
-                giftScreen.classList.add('hidden');
-                
-                messageScreen.classList.remove('hidden');
-                messageScreen.classList.add('active');
+  <div class="logo-wrap">
+    <div class="logo-3tx">3TX</div>
+    <div class="scan-line"></div>
+  </div>
 
-                // تشغيل تساقط القلوب فقط بعد ظهور الرسالة
-                startHeartRain();
-            }, 600);
-        }
+  <div class="tagline">تصميم المواقع الإلكترونية</div>
 
-        // دالة تساقط القلوب
-        function createFallingHeart() {
-            const heart = document.createElement('div');
-            const heartsArray = ['❤️', '💖', '💕', '💓', '✨']; // تم إضافة نجوم لامعة أيضاً
-            heart.innerHTML = heartsArray[Math.floor(Math.random() * heartsArray.length)];
-            heart.classList.add('particle');
-            
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-            heart.style.opacity = Math.random();
+  <div class="main-title">
+    نبني مواقع<br>
+    <span>تفرق الفارق</span>
+  </div>
 
-            document.body.appendChild(heart);
+  <div class="divider"></div>
 
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }
+  <div class="info-strip">
+    <div class="info-item"><div class="info-icon"></div><span>تصميم احترافي</span></div>
+    <div class="info-item"><div class="info-icon" style="animation-delay:.4s"></div><span>واجهات متميزة</span></div>
+    <div class="info-item"><div class="info-icon" style="animation-delay:.8s"></div><span>نتائج حقيقية</span></div>
+  </div>
+</div>
 
-        function startHeartRain() {
-            heartsInterval = setInterval(createFallingHeart, 300);
-        }
-    </script>
+<script>
+const pc = document.getElementById('particles');
+for (let i = 0; i < 50; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+  p.style.animationDuration = (7 + Math.random() * 10) + 's';
+  p.style.animationDelay = (Math.random() * 15) + 's';
+  const sz = 1 + Math.random() * 3;
+  p.style.width = p.style.height = sz + 'px';
+  const colors = ['#a855f7','#c026d3','#e879f9','#7c3aed','#d946ef'];
+  p.style.background = colors[Math.floor(Math.random()*colors.length)];
+  p.style.boxShadow = `0 0 ${sz*3}px ${p.style.background}`;
+  pc.appendChild(p);
+}
+const rc = document.getElementById('rings');
+for (let i = 0; i < 4; i++) {
+  const r = document.createElement('div');
+  r.className = 'ring';
+  const sz = 200 + i * 80;
+  r.style.width = r.style.height = sz + 'px';
+  r.style.top = '50%'; r.style.left = '50%';
+  r.style.marginTop = -(sz/2) + 'px';
+  r.style.marginLeft = -(sz/2) + 'px';
+  r.style.animationDuration = (6 + i * 2) + 's';
+  r.style.animationDelay = (i * 1.5) + 's';
+  rc.appendChild(r);
+}
+</script>
 </body>
 </html>
